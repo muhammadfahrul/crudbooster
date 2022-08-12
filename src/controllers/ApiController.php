@@ -138,7 +138,8 @@ class ApiController extends Controller
                     continue;
                 }
 
-                $input_validator[$name] = trim($value);
+                // $input_validator[$name] = trim($value);
+                $input_validator[$name] = $value;
 
                 if ($required == '1') {
                     $format_validation[] = 'required';
