@@ -381,7 +381,12 @@ $total = $result->total();
                                             @if(in_array($col['type_data'],['date','time','datetime','int','integer','smallint','tinyint','mediumint','bigint','double','float','decimal','timestamp']))
                                                 <option {{ (CRUDBooster::getTypeFilter($col["field_with"]) == 'between')?"selected":"" }} value='between'>{{cbLang("filter_between")}}</option>@endif
                                             <option {{ (CRUDBooster::getTypeFilter($col["field_with"]) == 'empty')?"selected":"" }} value='empty'>{{cbLang("filter_empty_or_null")}}</option> --}}
-                                            @if (strpos($col["field_with"], 'created_at') !== false || strpos($col["field_with"], 'updated_at') !== false || strpos($col["field_with"], 'last_login') !== false || strpos($col["field_with"], 'last_send') !== false)
+                                            {{-- @if (strpos($col["field_with"], 'created_at') !== false || strpos($col["field_with"], 'updated_at') !== false || strpos($col["field_with"], 'last_login') !== false || strpos($col["field_with"], 'last_send') !== false) --}}
+                                            @if (
+                                                (in_array($col['type_data'],['date','time','datetime','int','integer','smallint','tinyint','mediumint','bigint','double','float','decimal','timestamp'])) 
+                                                || ($col["filter"] == "date") 
+                                                || ($col["filter"] == "time")
+                                            )
                                                 <option {{ (CRUDBooster::getTypeFilter($col["field_with"]) == 'between')?"selected":"" }} value='between'>{{cbLang("filter_between")}}</option>
                                             @else
                                                 <option {{ (CRUDBooster::getTypeFilter($col["field_with"]) == 'like')?"selected":"" }} value='like'>{{cbLang("filter_like")}}</option>
@@ -412,7 +417,21 @@ $total = $result->total();
                                                     <input
                                                             {{ (CRUDBooster::getTypeFilter($col["field_with"]) != 'between')?"disabled":"" }}
                                                             type='text'
-                                                            class='filter-value-between form-control {{ in_array($col["type_data"],["date","datetime","timestamp","timestamp without time zone"]) ? "datepicker" : ((in_array($col["type_data"],["time"])) ? "timepicker" : "") }}'
+                                                            class='filter-value-between form-control {{ 
+                                                                (
+                                                                    (in_array($col["type_data"],["date","datetime","timestamp","timestamp without time zone"]))
+                                                                    || ($col["filter"] == "date")
+                                                                )
+                                                                ? "datepicker" : 
+                                                                (
+                                                                    (
+                                                                        (in_array($col["type_data"],["time"]))
+                                                                        || ($col["filter"] == "time")
+                                                                    )
+                                                                    ? "timepicker" 
+                                                                    : ""
+                                                                )
+                                                            }}'
                                                             {{ in_array($col["type_data"],["date","datetime","timestamp","timestamp without time zone","time"]) ? "" : "" }}
                                                             placeholder='{{$col["label"]}} {{cbLang("filter_from")}}'
                                                             name='filter_column[{{$col["field_with"]}}][value][]' 
@@ -428,7 +447,21 @@ $total = $result->total();
                                                     <input
                                                             {{ (CRUDBooster::getTypeFilter($col["field_with"]) != 'between')?"disabled":"" }}
                                                             type='text'
-                                                            class='filter-value-between form-control {{ in_array($col["type_data"],["date","datetime","timestamp","timestamp without time zone"]) ? "datepicker" : (in_array($col["type_data"],["time"]) ? "timepicker" : "" )}}'
+                                                            class='filter-value-between form-control {{ 
+                                                                (
+                                                                    (in_array($col["type_data"],["date","datetime","timestamp","timestamp without time zone"]))
+                                                                    || ($col["filter"] == "date")
+                                                                ) 
+                                                                ? "datepicker" : 
+                                                                (
+                                                                    (
+                                                                        (in_array($col["type_data"],["time"]))
+                                                                        || ($col["filter"] == "time")
+                                                                    )
+                                                                    ? "timepicker" 
+                                                                    : "" 
+                                                                )
+                                                            }}'
                                                             {{ in_array($col["type_data"],["date","datetime","timestamp","timestamp without time zone","time"]) ? "": "" }}
                                                             placeholder='{{$col["label"]}} {{cbLang("filter_to")}}'
                                                             name='filter_column[{{$col["field_with"]}}][value][]'
