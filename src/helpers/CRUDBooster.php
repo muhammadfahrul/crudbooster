@@ -89,7 +89,7 @@ class CRUDBooster
                 self::resizeImage($file_path.'/'.$filename, $resize_width, $resize_height);
 
                 if (env('UPLOAD_FILE_ONLINE', false) == true) {
-                    $upload = Storage::disk(env('UPLOAD_FILE_ONLINE_DISK'))->put(env('UPLOAD_FILE_ONLINE_PATH'), $file);
+                    $upload = Storage::disk(env('UPLOAD_FILE_ONLINE_DISK'))->put('/', $file);
                     $url = env('UPLOAD_FILE_ONLINE_HOST') . env('UPLOAD_FILE_ONLINE_PATH') . $upload;
     
                     return $url;
