@@ -24,7 +24,7 @@
                 <?php $dashboard = CRUDBooster::sidebarDashboard();?>
                 @if($dashboard)
                     <?php $listDomain = explode("|", $dashboard->domain) ?>
-                    @if (in_array(Request::root(), $listDomain))
+                    @if ((in_array(Request::root(), $listDomain)) || empty($dashboard->domain))
                     <li data-id='{{$dashboard->id}}' class="{{ (Request::is(config('crudbooster.ADMIN_PATH'))) ? 'active' : '' }}"><a
                                 href='{{CRUDBooster::adminPath()}}' class='{{($dashboard->color)?"text-".$dashboard->color:""}}'><i class='fa fa-dashboard'></i>
                             <span>{{cbLang("text_dashboard")}}</span> </a></li>
@@ -35,7 +35,7 @@
 
                 @foreach(CRUDBooster::sidebarMenu() as $menu)
                     <?php $listDomain = explode("|", $menu->domain) ?>
-                    @if (in_array(Request::root(), $listDomain))
+                    @if ((in_array(Request::root(), $listDomain)) || empty($menu->domain))
                     <li data-id='{{$menu->id}}' class='{{(!empty($menu->children))?"treeview":""}} {{ (Request::is($menu->url_path."*"))?"active":""}}'>
                         <a href='{{ ($menu->is_broken)?"javascript:alert('".cbLang('controller_route_404')."')":$menu->url }}'
                            class='{{($menu->color)?"text-".$menu->color:""}}'>
@@ -46,7 +46,7 @@
                             <ul class="treeview-menu">
                                 @foreach($menu->children as $child)
                                     <?php $listDomain = explode("|", $child->domain) ?>
-                                    @if (in_array(Request::root(), $listDomain))
+                                    @if ((in_array(Request::root(), $listDomain)) || empty($child->domain))
                                     <li data-id='{{$child->id}}' class='{{(Request::is($child->url_path .= !Str::endsWith(Request::decodedPath(), $child->url_path) ? "/*" : ""))?"active":""}}'>
                                         <a href='{{ ($child->is_broken)?"javascript:alert('".cbLang('controller_route_404')."')":$child->url}}'
                                            class='{{($child->color)?"text-".$child->color:""}}'>
