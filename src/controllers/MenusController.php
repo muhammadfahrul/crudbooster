@@ -204,7 +204,6 @@ class MenusController extends CBController
             "name" => "domain",
             "type" => "text",
             'placeholder' => 'http://127.0.0.1|http://127.0.0.2',
-            "required" => true,
         ];
 
         $fontawesome = Fontawesome::getIcons();
