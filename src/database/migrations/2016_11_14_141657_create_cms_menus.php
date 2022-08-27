@@ -19,7 +19,7 @@ class CreateCmsMenus extends Migration
             $table->string('path')->nullable();
             $table->string('color')->nullable();
             $table->string('icon')->nullable();
-            $table->string('domain')->nullable();
+            $table->longText('domain')->nullable();
             $table->integer('parent_id')->nullable();
             $table->boolean('is_active')->default(1);
             $table->boolean('is_dashboard')->default(0);
