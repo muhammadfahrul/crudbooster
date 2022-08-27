@@ -73,7 +73,25 @@ class PrivilegesController extends CBController
 
         $this->validation();
         $this->input_assignment();
-        $id = DB::table($this->table)->insertGetId($this->arr);
+
+        if ($this->primary_key != 'id') {
+            $lastInsertId = $id = DB::table($this->table)->insert($this->arr);
+            $id = $this->arr[$this->primary_key];
+        } else {
+            $lastInsertId = $id = DB::table($this->table)->insertGetId($this->arr);
+        }
+        if ($lastInsertId) {
+            $level = 3;
+            if ($this->arr['is_superadmin']) {
+                $level = 1;
+            }
+            $insertMerchantGroup = DB::table('tb_merchant_group')->insert([
+                'merchant_group_id' => $this->arr['id'],
+                'name' => $this->arr['name'],
+                'level' => $level,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+        }
 
         //set theme
         Session::put('theme_color', $this->arr['theme_color']);
@@ -138,7 +156,18 @@ class PrivilegesController extends CBController
         $this->validation($id);
         $this->input_assignment($id);
 
-        DB::table($this->table)->where($this->primary_key, $id)->update($this->arr);
+        $update = DB::table($this->table)->where($this->primary_key, $id)->update($this->arr);
+        if ($update) {
+            $level = 3;
+            if ($this->arr['is_superadmin']) {
+                $level = 1;
+            }
+            $updateMerchantGroup = DB::table('tb_merchant_group')->where('merchant_group_id', $id)->update([
+                'name' => $this->arr['name'],
+                'level' => $level,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        }
 
         $priv = Request::input("privileges");
 
@@ -202,7 +231,11 @@ class PrivilegesController extends CBController
             CRUDBooster::redirect(CRUDBooster::adminPath(), cbLang('denied_access'));
         }
 
-        DB::table($this->table)->where($this->primary_key, $id)->delete();
+        $delete = DB::table($this->table)->where($this->primary_key, $id)->delete();
+        if ($delete) {
+            $deleteTbMerchantGroup = DB::table('tb_merchant_group')->where('merchant_group_id', $id)->delete();
+        }
+        
         DB::table("cms_privileges_roles")->where("id_cms_privileges", $row->id)->delete();
 
         CRUDBooster::redirect(CRUDBooster::mainpath(), cbLang("alert_delete_data_success"), 'success');
