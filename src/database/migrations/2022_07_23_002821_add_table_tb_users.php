@@ -17,8 +17,8 @@ class AddTableTbUsers extends Migration
             $table->string('merchant_group_id');
             $table->string('merchant_id');
             $table->string('name')->nullable();
-            $table->string('email')->nullable()->unique();
-            $table->string('phone_number')->nullable()->unique();
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
             $table->string('password')->nullable();
             $table->string('avatar')->nullable();
             $table->boolean('is_active')->nullable()->default(0);
