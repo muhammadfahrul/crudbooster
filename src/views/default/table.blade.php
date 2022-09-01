@@ -383,7 +383,8 @@ $total = $result->total();
                                             <option {{ (CRUDBooster::getTypeFilter($col["field_with"]) == 'empty')?"selected":"" }} value='empty'>{{cbLang("filter_empty_or_null")}}</option> --}}
                                             {{-- @if (strpos($col["field_with"], 'created_at') !== false || strpos($col["field_with"], 'updated_at') !== false || strpos($col["field_with"], 'last_login') !== false || strpos($col["field_with"], 'last_send') !== false) --}}
                                             @if (
-                                                (in_array($col['type_data'],['date','time','datetime','int','integer','smallint','tinyint','mediumint','bigint','double','float','decimal','timestamp'])) 
+                                                // (in_array($col['type_data'],['date','time','datetime','int','integer','smallint','tinyint','mediumint','bigint','double','float','decimal','timestamp'])) 
+                                                (in_array($col['type_data'],['date','time','datetime','timestamp'])) 
                                                 || ($col["filter"] == "date") 
                                                 || ($col["filter"] == "time")
                                             )
