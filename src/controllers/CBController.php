@@ -478,7 +478,7 @@ class CBController extends Controller
                 if ($type == 'between') {
                     if ($key && $value) {
                         if (!empty($value[0]) && !empty($value[1])) {
-                            if ($key == $this->table.'.created_at' || $key == $this->table.'.updated_at') {
+                            // if ($key == $this->table.'.created_at' || $key == $this->table.'.updated_at') {
                                 $value[0] = str_replace("/","-",$value[0]);
                                 $explodeValue0 = explode("-", $value[0]);
                                 $value[0] = $explodeValue0[2].'-'.$explodeValue0[0].'-'.$explodeValue0[1];
@@ -488,7 +488,7 @@ class CBController extends Controller
                                 $explodeValue1 = explode("-", $value[1]);
                                 $value[1] = $explodeValue1[2].'-'.$explodeValue1[0].'-'.$explodeValue1[1];
                                 $value[1] = $value[1].' 23:59:59';
-                            }
+                            // }
                             $result->whereBetween($key, $value);
                         }
                     }
