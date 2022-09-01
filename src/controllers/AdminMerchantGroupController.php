@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers;
+<?php namespace muhammadfahrul\crudbooster\controllers;
 
 	use Session;
 	use Request;
