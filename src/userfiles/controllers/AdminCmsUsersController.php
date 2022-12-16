@@ -4,6 +4,7 @@ use Session;
 use Request;
 use DB;
 use CRUDbooster;
+use CB;
 use muhammadfahrul\crudbooster\controllers\CBController;
 use muhammadfahrul\crudbooster\export\DefaultExportXls;
 use Illuminate\Support\Facades\App;
@@ -93,6 +94,7 @@ class AdminCmsUsersController extends CBController {
 
         $this->hook_before_add($this->arr);
 
+        $this->primary_key = CB::pk($this->table);
         if ($this->primary_key != 'id') {
             $lastInsertId = $id = DB::table($this->table)->insert($this->arr);
             $id = $this->arr[$this->primary_key];

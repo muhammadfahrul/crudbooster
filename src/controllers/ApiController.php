@@ -1,6 +1,7 @@
 <?php namespace muhammadfahrul\crudbooster\controllers;
 
 use CRUDBooster;
+use CB;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
@@ -96,6 +97,7 @@ class ApiController extends Controller
         */
         if (! $row_api) {
             $result['api_status'] = 0;
+            $result['api_code'] = 500;
             $result['api_message'] = 'Sorry this API endpoint is no longer available or has been changed. Please make sure endpoint is correct.';
 
             goto show;
@@ -456,6 +458,7 @@ class ApiController extends Controller
                             if ($type == 'password') {
                                 if (! Hash::check($value, $rows->{$name})) {
                                     $result['api_status'] = 0;
+                                    $result['api_code'] = 401;
                                     $result['api_message'] = 'Invalid credentials. Check your username and password.';
 
                                     goto show;
@@ -466,6 +469,7 @@ class ApiController extends Controller
                                 if ($value) {
                                     if (! Hash::check($value, $rows->{$name})) {
                                         $result['api_status'] = 0;
+                                        $result['api_code'] = 401;
                                         $result['api_message'] = 'Invalid credentials. Check your username and password.';
 
                                         goto show;
@@ -564,12 +568,12 @@ class ApiController extends Controller
             }
 
             //Make sure if saving/updating data additional param included
-            // $arrkeys = array_keys($row_assign);
-            // foreach ($posts as $key => $value) {
-            //     if (! in_array($key, $arrkeys)) {
-            //         $row_assign[$key] = $value;
-            //     }
-            // }
+            $arrkeys = array_keys($row_assign);
+            foreach ($posts as $key => $value) {
+                if (! in_array($key, $arrkeys)) {
+                    $row_assign[$key] = $value;
+                }
+            }
 
             $lastId = null;
 
@@ -577,7 +581,13 @@ class ApiController extends Controller
 
                 DB::beginTransaction();
                 try{
-                    $id = DB::table($table)->insertGetId($row_assign);
+                    $primaryKey = CB::pk($table);
+                    if ($primaryKey != 'id') {
+                        $id = DB::table($table)->insert($row_assign);
+                        $id = $row_assign[$primaryKey];
+                    } else {
+                        $id = DB::table($table)->insertGetId($row_assign);
+                    }
                     DB::commit();
                 }catch (\Exception $e)
                 {

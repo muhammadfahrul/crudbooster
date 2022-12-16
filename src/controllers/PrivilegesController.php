@@ -1,6 +1,7 @@
 <?php namespace muhammadfahrul\crudbooster\controllers;
 
 use CRUDBooster;
+use CB;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Excel;
 use Illuminate\Support\Facades\PDF;
@@ -74,6 +75,7 @@ class PrivilegesController extends CBController
         $this->validation();
         $this->input_assignment();
 
+        $this->primary_key = CB::pk($this->table);
         if ($this->primary_key != 'id') {
             $lastInsertId = $id = DB::table($this->table)->insert($this->arr);
             $id = $this->arr[$this->primary_key];

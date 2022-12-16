@@ -1186,12 +1186,13 @@ class CBController extends Controller
         $this->validation();
         $this->input_assignment();
 
-        if (Schema::hasColumn($this->table, 'created_at') && Schema::hasColumn($this->table, 'updated_at')) {
+        if (Schema::hasColumn($this->table, 'created_at')) {
             $this->arr['created_at'] = date('Y-m-d H:i:s');
         }
 
         $this->hook_before_add($this->arr);
 
+        $this->primary_key = CB::pk($this->table);
         if ($this->primary_key != 'id') {
             $lastInsertId = $id = DB::table($this->table)->insert($this->arr);
             $id = $this->arr[$this->primary_key];
@@ -1630,7 +1631,13 @@ class CBController extends Controller
                                 $relation_primary_key = $relation_class->primary_key;
                                 $relation_id = $relation_exists->$relation_primary_key;
                             } else {
-                                $relation_id = DB::table($relation_table)->insertGetId($relation_insert_data);
+                                $relation_primary_key = CB::pk($relation_table);
+                                if ($relation_primary_key != 'id') {
+                                    $relation_id = DB::table($relation_table)->insert($relation_insert_data);
+                                    $id = $relation_insert_data[$relation_primary_key];
+                                } else {
+                                    $relation_id = DB::table($relation_table)->insertGetId($relation_insert_data);
+                                }
                             }
 
                             $a[$colname] = $relation_id;

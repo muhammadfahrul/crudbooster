@@ -17,8 +17,9 @@ class CBAuthAPI
     public function handle($request, Closure $next)
     {
 
-
-        CRUDBooster::authAPI();
+        if (env('CB_AUTH_API', true) == true) {
+            CRUDBooster::authAPI();
+        }
 
         return $next($request);
     }
