@@ -1,6 +1,6 @@
 <?php
 
-namespace muhammadfahrul\crudbooster\middlewares;
+namespace App\Http\Middleware;
 
 use Closure;
 use muhammadfahrul\crudbooster\helpers\CRUDBooster;

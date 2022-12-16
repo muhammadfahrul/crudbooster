@@ -1,15 +1,15 @@
 <?php
 
-namespace muhammadfahrul\crudbooster\helpers;
+namespace crocodicstudio\crudbooster\helpers;
 
 
-use muhammadfahrul\crudbooster\middlewares\CBAuthAPI;
+use crocodicstudio\crudbooster\middlewares\CBAuthAPI;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 class CBRouter
 {
-    private static $cb_namespace = '\muhammadfahrul\crudbooster\controllers';
+    private static $cb_namespace = '\crocodicstudio\crudbooster\controllers';
 
     public static function getCBControllerFiles() {
         $controllers = glob(__DIR__.'/../controllers/*.php');
@@ -26,8 +26,7 @@ class CBRouter
             Route::post("api/get-token","ApiAuthorizationController@postGetToken");
         });
 
-        // Route::group(['middleware' => ['api', CBAuthAPI::class], 'namespace' => 'App\Http\Controllers'], function () {
-        Route::group(['middleware' => ['api', \App\Http\Middleware\CBAuthAPI::class], 'namespace' => 'App\Http\Controllers'], function () {
+        Route::group(['middleware' => ['api', CBAuthAPI::class], 'namespace' => 'App\Http\Controllers'], function () {
 
             $dir = scandir(base_path("app/Http/Controllers"));
             foreach ($dir as $v) {
@@ -69,7 +68,7 @@ class CBRouter
 
     private static function userControllerRoute() {
         Route::group([
-            'middleware' => ['web', '\muhammadfahrul\crudbooster\middlewares\CBBackend'],
+            'middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\CBBackend'],
             'prefix' => config('crudbooster.ADMIN_PATH'),
             'namespace' => 'App\Http\Controllers',
         ], function () {
@@ -103,7 +102,7 @@ class CBRouter
 
     private static function cbRoute() {
         Route::group([
-            'middleware' => ['web', '\muhammadfahrul\crudbooster\middlewares\CBBackend'],
+            'middleware' => ['web', '\crocodicstudio\crudbooster\middlewares\CBBackend'],
             'prefix' => config('crudbooster.ADMIN_PATH'),
             'namespace' => static::$cb_namespace,
         ], function () {

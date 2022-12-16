@@ -1,9 +1,9 @@
 <?php
 
-namespace muhammadfahrul\crudbooster\middlewares;
+namespace crocodicstudio\crudbooster\middlewares;
 
 use Closure;
-use muhammadfahrul\crudbooster\helpers\CRUDBooster;
+use crocodicstudio\crudbooster\helpers\CRUDBooster;
 
 class CBAuthAPI
 {
