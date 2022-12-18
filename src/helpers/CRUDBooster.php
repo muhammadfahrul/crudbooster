@@ -1288,7 +1288,8 @@ class CRUDBooster
             }
         }
 
-        $accessToken = ltrim($authorization,"Bearer ");
+        // $accessToken = ltrim($authorization,"Bearer ");
+        $accessToken = str_replace("Bearer ", "", $authorization);
         $accessTokenData = Cache::get("api_token_".$accessToken);
         if(!$accessTokenData) {
             $code = 403;
