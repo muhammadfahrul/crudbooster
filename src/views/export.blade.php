@@ -36,6 +36,14 @@
                     }
 
                     $value = @$row->{$col['field']};
+                    $simbolNotAllow = env('SIMBOL_EXPORT_NOT_ALLOW', '&');
+                    $simbolNotAllow = explode('|', $simbolNotAllow);
+                    foreach ($simbolNotAllow as $keySimbolNotAllow => $valueSimbolNotAllow) {
+                        if (strpos($value, $valueSimbolNotAllow) !== false) {
+                            $value = str_replace($valueSimbolNotAllow, ' ', $value);
+                        }
+                    }
+                    
                     $title = @$row->{$title_field};
 
                     if (@$col['image']) {
