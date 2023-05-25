@@ -732,7 +732,9 @@ class CBController extends Controller
             if ($datatableWhere) {
                 $query->whereRaw($datatableWhere);
             }
-            $query->select('id as select_value', $label.' as select_label');
+            // $tablePK = "id";
+            $tablePK = CB::pk($table);
+            $query->select($tablePK.' as select_value', $label.' as select_label');
             $query->where($foreign_key_name, $foreign_key_value);
             $query->orderby($label, 'asc');
 
