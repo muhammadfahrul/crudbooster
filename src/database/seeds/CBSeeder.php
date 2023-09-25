@@ -31,7 +31,7 @@ class CBSeeder extends Seeder
                 if ($cmsUsers) {
                     DB::table('tb_users')->insertOrIgnore([
                         'user_id' => $cmsUsers->id,
-                        'merchant_group_id' => '',
+                        'merchant_group_id' => $cmsUsers->id_cms_privileges,
                         'merchant_id' => '',
                         'name' => $cmsUsers->name,
                         'email' => $cmsUsers->email,
