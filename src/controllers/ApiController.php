@@ -437,7 +437,7 @@ class ApiController extends Controller
                     $result['data'] = $rows;
                 } else {
                     $result['api_status'] = 0;
-                    $result['api_code'] = 204;
+                    $result['api_code'] = 404;
                     $result['api_message'] = 'There is no data found !';
                     $result['data'] = [];
                 }
@@ -497,7 +497,7 @@ class ApiController extends Controller
                     $result['data'] = $rows;
                 } else {
                     $result['api_status'] = 0;
-                    $result['api_code'] = 204;
+                    $result['api_code'] = 404;
                     $result['api_message'] = 'There is no data found !';
 
                 }
