@@ -467,12 +467,14 @@ class ApiController extends Controller
                         } else {
                             if ($used) {
                                 if ($value) {
-                                    if (! Hash::check($value, $rows->{$name})) {
-                                        $result['api_status'] = 0;
-                                        $result['api_code'] = 401;
-                                        $result['api_message'] = 'Invalid credentials. Check your username and password.';
-
-                                        goto show;
+                                    if ($type == 'password') {
+                                        if (! Hash::check($value, $rows->{$name})) {
+                                            $result['api_status'] = 0;
+                                            $result['api_code'] = 401;
+                                            $result['api_message'] = 'Invalid credentials. Check your username and password.';
+        
+                                            goto show;
+                                        }
                                     }
                                 }
                             }
