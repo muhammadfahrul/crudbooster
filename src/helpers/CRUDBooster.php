@@ -911,6 +911,43 @@ class CRUDBooster
         return $array;
     }
 
+    public static function buildCurl($url='', $method='POST', $payload=[], $header=[])
+    {
+        $curl = curl_init();
+
+        $header = [
+            'Content-Type: application/json'
+        ];
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => $method,
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_HTTPHEADER => $header
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        self::buildLogging('curl', json_encode([
+            'ip' => getHostByName(getHostName()),
+            'url' => $url,
+            'method' => $method,
+            'payload' => json_encode($payload),
+            'header' => json_encode($header),
+            'response' => $response
+        ], JSON_PRETTY_PRINT));
+
+        return json_decode($response);
+    }
+
     public static function valid($arr = [], $type = 'json')
     {
         $input_arr = Request::all();

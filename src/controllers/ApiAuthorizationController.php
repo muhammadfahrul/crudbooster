@@ -6,6 +6,7 @@ namespace muhammadfahrul\crudbooster\controllers;
 
 use muhammadfahrul\crudbooster\helpers\CB;
 use Illuminate\Support\Facades\Cache;
+use muhammadfahrul\crudbooster\helpers\CRUDBooster;
 
 class ApiAuthorizationController extends Controller
 {
@@ -35,13 +36,13 @@ class ApiAuthorizationController extends Controller
                 'access_token'=>$accessToken,
                 'expiry'=> strtotime("+".$this->ttl." minutes")
             ];
-            $response = $this->buildResponse($code, $status, $message, $start, $data);
+            $response = CRUDBooster::buildResponse($code, $status, $message, $start, $data);
             return response()->json($response);
         } else {
             $code = 400;
             $status = false;
             $message = 'Credential invalid!';
-            $response = $this->buildResponse($code, $status, $message, $start);
+            $response = CRUDBooster::buildResponse($code, $status, $message, $start);
             return response()->json($response);
         }
     }

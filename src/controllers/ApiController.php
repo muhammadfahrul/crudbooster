@@ -653,7 +653,7 @@ class ApiController extends Controller
         $code = $result['api_code'] ?: 200;
         $status = ($result['api_status'] == 1) ? true : false;
         $start = microtime(true);
-        $result = $this->buildResponse($code, $status, $result['api_message'], $start, $result['data']);
+        $result = CRUDBooster::buildResponse($code, $status, $result['api_message'], $start, $result['data']);
 
         $this->hook_after($posts, $result);
         if($this->output) return response()->json($this->output);
