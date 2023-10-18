@@ -915,9 +915,11 @@ class CRUDBooster
     {
         $curl = curl_init();
 
-        $header = [
-            'Content-Type: application/json'
-        ];
+        if (empty($header)) {
+            $header = [
+                'Content-Type: application/json'
+            ];
+        }
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
