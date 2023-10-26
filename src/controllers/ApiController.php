@@ -163,6 +163,8 @@ class ApiController extends Controller
                     $format_validation[] = 'unique:'.$config;
                 } elseif ($type == 'date_format') {
                     $format_validation[] = 'date_format:'.$config;
+                } elseif ($type == 'digits') {
+                    $format_validation[] = 'digits:'.$config;
                 } elseif ($type == 'digits_between') {
                     $format_validation[] = 'digits_between:'.$config;
                 } elseif ($type == 'in') {
