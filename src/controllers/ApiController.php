@@ -12,12 +12,12 @@ class ApiController extends Controller
     public $method_type;
     public $permalink;
 
-    private $hook_api_status;
-    private $hook_api_message;
-    private $last_id_tmp = [];
+    public $hook_api_status;
+    public $hook_api_message;
+    public $last_id_tmp = [];
 
-    private $limit = null;
-    private $output = null;
+    public $limit = null;
+    public $output = null;
 
     public function setLimit($limit)
     {
