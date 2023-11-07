@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
@@ -625,8 +626,9 @@ class ApiController extends Controller
                     $result['api_message'] = 'Success';
 
                 } catch (\Exception $e) {
+                    Log::error($e);
                     $result['api_status'] = 0;
-                    $result['api_message'] = 'Failed, '.$e;
+                    $result['api_message'] = 'Failed';
 
 
                 }
