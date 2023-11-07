@@ -843,7 +843,7 @@ class CRUDBooster
         chmod($file, 0777);
     }
 
-    public static function buildResponse($code=200, $status=true, $message='Success', $start=0, $data=array(), $total=false){
+    public static function buildResponse($code=200, $status=true, $message='Success', $start=0, $data=array(), $total=false, $logging=true){
         $response = new \stdClass();
         $response->code = $code;
         $response->status = $status;
@@ -867,12 +867,14 @@ class CRUDBooster
         $header = (object) request()->header();
         $body = (object) request()->all();
 
-        self::buildLogging('api', json_encode([
-            'url' => url()->current(),
-            'header' => $header,
-            'body' => $body,
-            'response' => $response
-        ], JSON_PRETTY_PRINT));
+        if ($logging) {
+            self::buildLogging('api', json_encode([
+                'url' => url()->current(),
+                'header' => $header,
+                'body' => $body,
+                'response' => $response
+            ], JSON_PRETTY_PRINT));
+        }
 
         return $response;
     }
@@ -911,7 +913,7 @@ class CRUDBooster
         return $array;
     }
 
-    public static function buildCurl($url='', $method='POST', $payload=[], $header=[])
+    public static function buildCurl($url='', $method='POST', $payload=[], $header=[], $logging=true)
     {
         $curl = curl_init();
 
@@ -938,14 +940,16 @@ class CRUDBooster
 
         curl_close($curl);
 
-        self::buildLogging('curl', json_encode([
-            'ip' => getHostByName(getHostName()),
-            'url' => $url,
-            'method' => $method,
-            'payload' => json_encode($payload),
-            'header' => json_encode($header),
-            'response' => json_encode(json_decode($response))
-        ], JSON_PRETTY_PRINT));
+        if ($logging) {
+            self::buildLogging('curl', json_encode([
+                'ip' => getHostByName(getHostName()),
+                'url' => $url,
+                'method' => $method,
+                'payload' => json_encode($payload),
+                'header' => json_encode($header),
+                'response' => json_encode(json_decode($response))
+            ], JSON_PRETTY_PRINT));
+        }
 
         return json_decode($response);
     }
