@@ -654,13 +654,13 @@ class ApiController extends Controller
         $result['api_status'] = $this->hook_api_status ?: $result['api_status'];
         $result['api_message'] = $this->hook_api_message ?: $result['api_message'];
 
+        $this->hook_after($posts, $result);
+        if($this->output) return response()->json($this->output);
+
         $code = $result['api_code'] ?: 200;
         $status = ($result['api_status'] == 1) ? true : false;
         $start = microtime(true);
         $result = CRUDBooster::buildResponse($code, $status, $result['api_message'], $start, $result['data']);
-
-        $this->hook_after($posts, $result);
-        if($this->output) return response()->json($this->output);
 
         if($output == 'JSON') {
             return response()->json($result, $code);
