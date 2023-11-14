@@ -105,7 +105,7 @@ class AdminController extends CBController
         
                     $updateUser = DB::table('tb_users')->where('email', $email)->update([
                         'login_attempt' => ($tbUsers->login_attempt + 1),
-                        'last_login_datetime' => date('Y-m-d H:i:s'),
+                        'last_login_at' => date('Y-m-d H:i:s'),
                         'last_login_ip' => $_SERVER['REMOTE_ADDR']
                     ]);
         

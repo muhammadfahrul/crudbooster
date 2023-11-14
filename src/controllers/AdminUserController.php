@@ -70,7 +70,7 @@
 			$this->form[] = ['label'=>'Role','name'=>'role','type'=>'hidden','validation'=>'max:255','width'=>'col-sm-10'];
 			if (\Request::segment(3) == 'detail') {
 				$this->form[] = ['label'=>'Login Attempt','name'=>'login_attempt','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
-				$this->form[] = ['label'=>'Last Login Datetime','name'=>'last_login_datetime','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
+				$this->form[] = ['label'=>'Last Login At','name'=>'last_login_at','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 				$this->form[] = ['label'=>'Last Login Ip','name'=>'last_login_ip','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 				$this->form[] = ['label'=>'Remember Token','name'=>'remember_token','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 				$this->form[] = ['label'=>'Created At','name'=>'created_at','type'=>'datetime','validation'=>'required','width'=>'col-sm-10'];
@@ -88,7 +88,7 @@
 			//$this->form[] = ["label"=>"Avatar","name"=>"avatar","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"Is Active","name"=>"is_active","type"=>"radio","required"=>TRUE,"validation"=>"required|integer","dataenum"=>"Array"];
 			//$this->form[] = ["label"=>"Login Attempt","name"=>"login_attempt","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Last Login Datetime","name"=>"last_login_datetime","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
+			//$this->form[] = ["label"=>"Last Login Datetime","name"=>"last_login_at","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"Last Login Ip","name"=>"last_login_ip","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"Role","name"=>"role","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"Remember Token","name"=>"remember_token","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
