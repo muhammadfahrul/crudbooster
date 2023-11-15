@@ -31,7 +31,6 @@
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
 			$this->col[] = ["label"=>"Merchant ID","name"=>"merchant_id"];
-			$this->col[] = ["label"=>"Merchant Group","name"=>"merchant_group_id","join"=>"tb_merchant_group,name","join_id"=>"merchant_group_id","select_option"=>((new \App\Http\Controllers\AdminMerchantGroupController())->hook_query_index(DB::table('tb_merchant_group'), true)->get())];
 			$this->col[] = ["label"=>"Name","name"=>"name"];
 			$this->col[] = ["label"=>"Description","name"=>"description"];
 			$this->col[] = ["label"=>"Address","name"=>"address"];
@@ -42,7 +41,6 @@
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'Merchant ID','name'=>'merchant_id','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','readonly'=>'true','value'=>md5(uniqid(time(), true))];
-			$this->form[] = ['label'=>'Merchant Group','name'=>'merchant_group_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'tb_merchant_group,name','join_pk'=>'merchant_group_id'];
 			$this->form[] = ['label'=>'Name','name'=>'name','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Description','name'=>'description','type'=>'textarea','validation'=>'max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Address','name'=>'address','type'=>'textarea','validation'=>'max:255','width'=>'col-sm-10'];
@@ -56,7 +54,6 @@
 			# OLD START FORM
 			//$this->form = [];
 			//$this->form[] = ["label"=>"Merchant Id","name"=>"merchant_id","type"=>"select2","required"=>TRUE,"validation"=>"required|min:1|max:255","datatable"=>"merchant,id"];
-			//$this->form[] = ["label"=>"Merchant Group Id","name"=>"merchant_group_id","type"=>"select2","required"=>TRUE,"validation"=>"required|min:1|max:255","datatable"=>"merchant_group,id"];
 			//$this->form[] = ["label"=>"Name","name"=>"name","type"=>"text","required"=>TRUE,"validation"=>"required|string|min:3|max:70","placeholder"=>"You can only enter the letter only"];
 			//$this->form[] = ["label"=>"Description","name"=>"description","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"Address","name"=>"address","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];

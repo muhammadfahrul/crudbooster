@@ -14,7 +14,7 @@ class AddTableTbUsers extends Migration
     {
         Schema::create('tb_users', function (Blueprint $table) {
             $table->string('user_id')->unique();
-            $table->string('merchant_group_id');
+            $table->string('privilege_id');
             $table->string('merchant_id');
             $table->string('name')->nullable();
             $table->string('email')->nullable();

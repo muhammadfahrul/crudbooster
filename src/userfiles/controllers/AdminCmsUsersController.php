@@ -96,6 +96,7 @@ class AdminCmsUsersController extends CBController {
 
         $this->primary_key = CB::pk($this->table);
         if ($this->primary_key != 'id') {
+            $this->arr[$this->primary_key] = (!empty($this->arr[$this->primary_key]) ? $this->arr[$this->primary_key] : time());
             $lastInsertId = $id = DB::table($this->table)->insert($this->arr);
             $id = $this->arr[$this->primary_key];
         } else {
@@ -104,7 +105,7 @@ class AdminCmsUsersController extends CBController {
 		if ($lastInsertId) {
 			$insertCmsUsers = DB::table('tb_users')->insert([
 				'user_id' => $this->arr['id'],
-				'merchant_group_id' => $this->arr['id_cms_privileges'],
+				'privilege_id' => $this->arr['id_cms_privileges'],
 				'name' => $this->arr['name'],
 				'email' => $this->arr['email'],
 				'avatar' => $this->arr['photo'],
@@ -242,7 +243,7 @@ class AdminCmsUsersController extends CBController {
 				'name' => $this->arr['name'],
 				'avatar' => $this->arr['photo'],
 				'email' => $this->arr['email'],
-				'merchant_group_id' => $this->arr['id_cms_privileges'],
+				'privilege_id' => $this->arr['id_cms_privileges'],
 				'updated_at' => date('Y-m-d H:i:s')
 			];
 			if (!empty($this->arr['password'])) {

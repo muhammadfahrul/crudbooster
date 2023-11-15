@@ -588,6 +588,7 @@ class ApiController extends Controller
                 try{
                     $primaryKey = CB::pk($table);
                     if ($primaryKey != 'id') {
+                        $row_assign[$primaryKey] = (!empty($row_assign[$primaryKey]) ? $row_assign[$primaryKey] : time());
                         $id = DB::table($table)->insert($row_assign);
                         $id = $row_assign[$primaryKey];
                     } else {

@@ -31,7 +31,7 @@ class CBSeeder extends Seeder
                 if ($cmsUsers) {
                     DB::table('tb_users')->insertOrIgnore([
                         'user_id' => $cmsUsers->id,
-                        'merchant_group_id' => $cmsUsers->id_cms_privileges,
+                        'privilege_id' => $cmsUsers->id_cms_privileges,
                         'merchant_id' => '',
                         'name' => $cmsUsers->name,
                         'email' => $cmsUsers->email,
@@ -398,16 +398,6 @@ class CBSeeder extends Seeder
                 'is_superadmin' => 1,
                 'theme_color' => 'skin-red',
             ]);
-            if ($cms_privileges) {
-                $cmsPrivileges = DB::table('cms_privileges')->where('name', 'Super Administrator')->first();
-                if ($cmsPrivileges) {
-                    DB::table('tb_merchant_group')->insertOrIgnore([
-                        'merchant_group_id' => $cmsPrivileges->id,
-                        'name' => $cmsPrivileges->name,
-                        'created_at' => date('Y-m-d H:i:s')
-                    ]);
-                }
-            }
         }
         if (DB::table('cms_privileges_roles')->count() == 0) {
             $modules = DB::table('cms_moduls')->get();

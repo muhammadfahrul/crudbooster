@@ -44,9 +44,8 @@
 			# START COLUMNS DO NOT REMOVE THIS LINE
 			$this->col = [];
 			$this->col[] = ["label"=>"User ID","name"=>"user_id"];
-			$this->col[] = ["label"=>"Merchant Group","name"=>"merchant_group_id","join"=>"tb_merchant_group,name","join_id"=>"merchant_group_id","select_option"=>((new \App\Http\Controllers\AdminMerchantGroupController())->hook_query_index(DB::table('tb_merchant_group'), true)->get())];
-			// $this->col[] = ["label"=>"Merchant","name"=>"merchant_id","join"=>"tb_merchant,name","join_id"=>"merchant_id","select_option"=>((new \App\Http\Controllers\AdminMerchantController())->hook_query_index(DB::table('tb_merchant'), true)->get())];
-			$this->col[] = $this->formMerchant('column');
+			$this->col[] = ["label"=>"Privilege","name"=>"privilege_id","join"=>"cms_privileges,name","join_id"=>"id_cms_privileges"];
+			$this->col[] = ["label"=>"Merchant","name"=>"merchant_id","join"=>"tb_merchant,name","join_id"=>"merchant_id","select_option"=>((new \App\Http\Controllers\AdminMerchantController())->hook_query_index(DB::table('tb_merchant'), true)->get())];
 			$this->col[] = ["label"=>"Name","name"=>"name"];
 			$this->col[] = ["label"=>"Email","name"=>"email"];
 			$this->col[] = ["label"=>"Phone Number","name"=>"phone_number"];
@@ -58,9 +57,8 @@
 			# START FORM DO NOT REMOVE THIS LINE
 			$this->form = [];
 			$this->form[] = ['label'=>'User ID','name'=>'user_id','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10','readonly'=>'true','value'=>time()];
-			$this->form[] = ['label'=>'Merchant Group','name'=>'merchant_group_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'tb_merchant_group,name','join_pk'=>'merchant_group_id'];
-			// $this->form[] = ['label'=>'Merchant','name'=>'merchant_id','type'=>'select2','validation'=>'max:255','width'=>'col-sm-10','datatable'=>'tb_merchant,name','join_pk'=>'merchant_id'];
-			$this->form[] = $this->formMerchant('form');
+			$this->form[] = ['label'=>'Privilege','name'=>'privilege_id','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','datatable'=>'cms_privileges,name','join_pk'=>'id_cms_privileges'];
+			$this->form[] = ['label'=>'Merchant','name'=>'merchant_id','type'=>'select2','validation'=>'max:255','width'=>'col-sm-10','datatable'=>'tb_merchant,name','join_pk'=>'merchant_id'];
 			$this->form[] = ['label'=>'Name','name'=>'name','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Email','name'=>'email','type'=>'email','validation'=>'required|min:1|max:255|email','width'=>'col-sm-10','placeholder'=>'Please enter a valid email address'];
 			$this->form[] = ['label'=>'Phone Number','name'=>'phone_number','type'=>'number','validation'=>'required','width'=>'col-sm-10'];
@@ -281,13 +279,6 @@
 	        //Your code here
 			$query->where('tb_users.user_id', '!=', '1');
 			$query->where('tb_users.user_id', '!=', session()->get('user_id'));
-
-			if (!empty(session()->get('merchant_id')) && !empty(session()->get('merchant_group_id')) && session()->get('level') >= 3) {
-				$query->where('tb_users.merchant_id', session()->get('merchant_id'));
-			} elseif (empty(session()->get('merchant_id')) && !empty(session()->get('merchant_group_id')) && session()->get('level') >= 3) {
-				$listMerchantId = DB::table('tb_merchant')->where('merchant_group_id', session()->get('merchant_group_id'))->pluck('merchant_id');
-				$query->whereIn('tb_users.merchant_id', $listMerchantId);
-			}
 	            
 			if ($returnQuery) {
 				return $query;
@@ -381,35 +372,6 @@
 
 	    //By the way, you can still create your own method in here... :) 
 
-
-		function formMerchant($type = 'form')
-		{
-			if ($type == 'column') {
-				if (!empty(session()->get('merchant_id')) && !empty(session()->get('merchant_group_id')) && session()->get('level') >= 3) {
-					$column = ["label"=>"Merchant","name"=>"merchant_id","join"=>"tb_merchant,name","visible"=>false,"join_id"=>"merchant_id","select_option"=>((new \App\Http\Controllers\AdminMerchantController())->hook_query_index(DB::table('tb_merchant'), true)->get())];
-				} elseif (empty(session()->get('merchant_id')) && !empty(session()->get('merchant_group_id')) && session()->get('level') >= 3) {
-					$column = ["label"=>"Merchant","name"=>"merchant_id","join"=>"tb_merchant,name","visible"=>false,"join_id"=>"merchant_id","select_option"=>((new \App\Http\Controllers\AdminMerchantController())->hook_query_index(DB::table('tb_merchant'), true)->get())];
-				} else {
-					$column = ["label"=>"Merchant","name"=>"merchant_id","join"=>"tb_merchant,name","join_id"=>"merchant_id","select_option"=>((new \App\Http\Controllers\AdminMerchantController())->hook_query_index(DB::table('tb_merchant'), true)->get())];
-				}
-
-				return $column;
-			} else {
-				$datatableWhere = "status = '1'";
-				
-				if (!empty(session()->get('merchant_id')) && !empty(session()->get('merchant_group_id')) && session()->get('level') >= 3) {
-					$datatableWhere .= " AND merchant_id = '" . session()->get('merchant_id') . "'";
-					$form = ['label'=>'Merchant','name'=>'merchant_id','type'=>'select2','validation'=>'max:255','width'=>'col-sm-10','datatable'=>'tb_merchant,name','datatable_where'=>$datatableWhere,'datatable_ajax'=>false,'join_pk'=>'merchant_id'];
-				} elseif (empty(session()->get('merchant_id')) && !empty(session()->get('merchant_group_id')) && session()->get('level') >= 3) {
-					$listMerchantId = DB::table('tb_merchant')->where('merchant_group_id', session()->get('merchant_group_id'))->pluck('merchant_id');
-					$form = ['label'=>'Merchant','name'=>'merchant_id','type'=>'select2','validation'=>'max:255','width'=>'col-sm-10','datatable'=>'tb_merchant,name','datatable_where'=>$datatableWhere,'datatable_where_in'=>$listMerchantId,'datatable_ajax'=>false,'join_pk'=>'merchant_id'];
-				} else {
-					$form = ['label'=>'Merchant','name'=>'merchant_id','type'=>'select2','validation'=>'max:255','width'=>'col-sm-10','datatable'=>'tb_merchant,name','datatable_where'=>$datatableWhere,'datatable_ajax'=>false,'join_pk'=>'merchant_id'];
-				}	
-	
-				return $form;
-			}
-		}
 
 		public function validation($id = null)
 		{
@@ -596,6 +558,7 @@
 	
 			$this->primary_key = CB::pk($this->table);
 			if ($this->primary_key != 'id') {
+				$this->arr[$this->primary_key] = (!empty($this->arr[$this->primary_key]) ? $this->arr[$this->primary_key] : time());
 				$lastInsertId = $id = DB::table($this->table)->insert($this->arr);
 				$id = $this->arr[$this->primary_key];
 			} else {
@@ -608,7 +571,7 @@
 					'photo' => $this->arr['avatar'],
 					'email' => $this->arr['email'],
 					'password' => $this->arr['password'],
-					'id_cms_privileges' => $this->arr['merchant_group_id'],
+					'id_cms_privileges' => $this->arr['privilege_id'],
 					'status' => 'Active',
 					'created_at' => date('Y-m-d H:i:s')
 				]);
@@ -742,7 +705,7 @@
 					'name' => $this->arr['name'],
 					'photo' => $this->arr['avatar'],
 					'email' => $this->arr['email'],
-					'id_cms_privileges' => $this->arr['merchant_group_id'],
+					'id_cms_privileges' => $this->arr['privilege_id'],
 					'updated_at' => date('Y-m-d H:i:s')
 				];
 				if (!empty($this->arr['password'])) {

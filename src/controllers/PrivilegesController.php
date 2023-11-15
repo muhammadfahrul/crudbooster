@@ -77,22 +77,11 @@ class PrivilegesController extends CBController
 
         $this->primary_key = CB::pk($this->table);
         if ($this->primary_key != 'id') {
+            $this->arr[$this->primary_key] = (!empty($this->arr[$this->primary_key]) ? $this->arr[$this->primary_key] : time());
             $lastInsertId = $id = DB::table($this->table)->insert($this->arr);
             $id = $this->arr[$this->primary_key];
         } else {
             $lastInsertId = $id = DB::table($this->table)->insertGetId($this->arr);
-        }
-        if ($lastInsertId) {
-            $level = 3;
-            if ($this->arr['is_superadmin']) {
-                $level = 1;
-            }
-            $insertMerchantGroup = DB::table('tb_merchant_group')->insert([
-                'merchant_group_id' => $this->arr['id'],
-                'name' => $this->arr['name'],
-                'level' => $level,
-                'created_at' => date('Y-m-d H:i:s')
-            ]);
         }
 
         //set theme
@@ -159,17 +148,6 @@ class PrivilegesController extends CBController
         $this->input_assignment($id);
 
         $update = DB::table($this->table)->where($this->primary_key, $id)->update($this->arr);
-        if ($update) {
-            $level = 3;
-            if ($this->arr['is_superadmin']) {
-                $level = 1;
-            }
-            $updateMerchantGroup = DB::table('tb_merchant_group')->where('merchant_group_id', $id)->update([
-                'name' => $this->arr['name'],
-                'level' => $level,
-                'updated_at' => date('Y-m-d H:i:s')
-            ]);
-        }
 
         $priv = Request::input("privileges");
 
@@ -234,9 +212,6 @@ class PrivilegesController extends CBController
         }
 
         $delete = DB::table($this->table)->where($this->primary_key, $id)->delete();
-        if ($delete) {
-            $deleteTbMerchantGroup = DB::table('tb_merchant_group')->where('merchant_group_id', $id)->delete();
-        }
         
         DB::table("cms_privileges_roles")->where("id_cms_privileges", $row->id)->delete();
 

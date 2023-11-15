@@ -77,7 +77,6 @@ class AdminController extends CBController
         $password = Request::input("password");
         $users = DB::table(config('crudbooster.USER_TABLE'))->where("email", $email)->first();
         $tbUsers = DB::table('tb_users')->where('email', $email)->first();
-        $merchantGroup = DB::table('tb_merchant_group')->where('merchant_group_id', $tbUsers->merchant_group_id)->first();
 
         if ($users->status == 'Active' && $tbUsers->is_active == true) {
         // if ($users->status == 'Active') {
@@ -97,8 +96,6 @@ class AdminController extends CBController
                     Session::put('admin_privileges_name', $priv->name);
                     Session::put("user_id", $tbUsers->user_id);
                     Session::put("merchant_id", $tbUsers->merchant_id);
-                    Session::put("merchant_group_id", $tbUsers->merchant_group_id);
-                    Session::put("level", $merchantGroup->level);
                     Session::put('admin_lock', 0);
                     Session::put('theme_color', $priv->theme_color);
                     Session::put("appname", get_setting('appname'));

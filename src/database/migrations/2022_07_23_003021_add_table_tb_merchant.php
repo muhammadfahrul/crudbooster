@@ -14,7 +14,6 @@ class AddTableTbMerchant extends Migration
     {
         Schema::create('tb_merchant', function (Blueprint $table) {
             $table->string('merchant_id')->unique();
-            $table->string('merchant_group_id');
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->longText('address')->nullable();

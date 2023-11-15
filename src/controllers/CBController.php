@@ -1196,6 +1196,7 @@ class CBController extends Controller
 
         $this->primary_key = CB::pk($this->table);
         if ($this->primary_key != 'id') {
+            $this->arr[$this->primary_key] = (!empty($this->arr[$this->primary_key]) ? $this->arr[$this->primary_key] : time());
             $lastInsertId = $id = DB::table($this->table)->insert($this->arr);
             $id = $this->arr[$this->primary_key];
         } else {
