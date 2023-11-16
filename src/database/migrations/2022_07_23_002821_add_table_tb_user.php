@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddTableTbUsers extends Migration
+class AddTableTbUser extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddTableTbUsers extends Migration
      */
     public function up()
     {
-        Schema::create('tb_users', function (Blueprint $table) {
+        Schema::create('tb_user', function (Blueprint $table) {
             $table->string('user_id')->unique();
             $table->string('privilege_id');
             $table->string('merchant_id');
@@ -39,6 +39,6 @@ class AddTableTbUsers extends Migration
      */
     public function down()
     {
-        Schema::drop('tb_users');
+        Schema::drop('tb_user');
     }
 }
