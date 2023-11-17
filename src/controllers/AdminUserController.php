@@ -38,7 +38,7 @@
 			$this->button_filter = true;
 			$this->button_import = false;
 			$this->button_export = true;
-			$this->table = "tb_users";
+			$this->table = "tb_user";
 			# END CONFIGURATION DO NOT REMOVE THIS LINE
 
 			# START COLUMNS DO NOT REMOVE THIS LINE
@@ -81,7 +81,7 @@
 			//$this->form[] = ["label"=>"User Id","name"=>"user_id","type"=>"select2","required"=>TRUE,"validation"=>"required|min:1|max:255","datatable"=>"user,id"];
 			//$this->form[] = ["label"=>"Merchant Id","name"=>"merchant_id","type"=>"select2","required"=>TRUE,"validation"=>"required|min:1|max:255","datatable"=>"merchant,id"];
 			//$this->form[] = ["label"=>"Name","name"=>"name","type"=>"text","required"=>TRUE,"validation"=>"required|string|min:3|max:70","placeholder"=>"You can only enter the letter only"];
-			//$this->form[] = ["label"=>"Email","name"=>"email","type"=>"email","required"=>TRUE,"validation"=>"required|min:1|max:255|email|unique:tb_users","placeholder"=>"Please enter a valid email address"];
+			//$this->form[] = ["label"=>"Email","name"=>"email","type"=>"email","required"=>TRUE,"validation"=>"required|min:1|max:255|email|unique:tb_user","placeholder"=>"Please enter a valid email address"];
 			//$this->form[] = ["label"=>"Password","name"=>"password","type"=>"password","required"=>TRUE,"validation"=>"min:3|max:32","help"=>"Minimum 5 characters. Please leave empty if you did not change the password."];
 			//$this->form[] = ["label"=>"Avatar","name"=>"avatar","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"Status","name"=>"status","type"=>"select2","required"=>TRUE,"validation"=>"required|min:1|max:255","dataenum"=>"Array"];
@@ -277,8 +277,8 @@
 	    */
 	    public function hook_query_index(&$query, $returnQuery=false) {
 	        //Your code here
-			$query->where('tb_users.user_id', '!=', '1');
-			$query->where('tb_users.user_id', '!=', session()->get('user_id'));
+			$query->where('tb_user.user_id', '!=', '1');
+			$query->where('tb_user.user_id', '!=', session()->get('user_id'));
 	            
 			if ($returnQuery) {
 				return $query;
@@ -488,13 +488,13 @@
 				'required',
 				'min:1',
 				'max:255',
-				Rule::unique('tb_users', 'email')
+				Rule::unique('tb_user', 'email')
 			];
 			$array_input['phone_number'] = [
 				'required',
 				'min:1',
 				'max:255',
-				Rule::unique('tb_users', 'phone_number')
+				Rule::unique('tb_user', 'phone_number')
 			];
 
 			if (!empty($id)) {
@@ -502,13 +502,13 @@
 					'required',
 					'min:1',
 					'max:255',
-					Rule::unique('tb_users', 'email')->ignore($id, 'user_id')
+					Rule::unique('tb_user', 'email')->ignore($id, 'user_id')
 				];
 				$array_input['phone_number'] = [
 					'required',
 					'min:1',
 					'max:255',
-					Rule::unique('tb_users', 'phone_number')->ignore($id, 'user_id')
+					Rule::unique('tb_user', 'phone_number')->ignore($id, 'user_id')
 				];
 			}
 

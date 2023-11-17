@@ -76,11 +76,11 @@ class AdminController extends CBController
         $email = Request::input("email");
         $password = Request::input("password");
         $users = DB::table(config('crudbooster.USER_TABLE'))->where("email", $email)->first();
-        $tbUsers = DB::table('tb_users')->where('email', $email)->first();
+        $tbUser = DB::table('tb_user')->where('email', $email)->first();
 
-        if ($users->status == 'Active' && $tbUsers->status == 'ACTIVE') {
+        if ($users->status == 'Active' && $tbUser->status == 'ACTIVE') {
         // if ($users->status == 'Active') {
-            if ((!empty($tbUsers->role) && $tbUsers->role == 'ADMIN') || empty($tbUsers->role)) {
+            if ((!empty($tbUser->role) && $tbUser->role == 'ADMIN') || empty($tbUser->role)) {
                 if (\Hash::check($password, $users->password)) {
                     $priv = DB::table("cms_privileges")->where("id", $users->id_cms_privileges)->first();
         
@@ -94,14 +94,14 @@ class AdminController extends CBController
                     Session::put('admin_privileges_roles', $roles);
                     Session::put("admin_privileges", $users->id_cms_privileges);
                     Session::put('admin_privileges_name', $priv->name);
-                    Session::put("user_id", $tbUsers->user_id);
-                    Session::put("merchant_id", $tbUsers->merchant_id);
+                    Session::put("user_id", $tbUser->user_id);
+                    Session::put("merchant_id", $tbUser->merchant_id);
                     Session::put('admin_lock', 0);
                     Session::put('theme_color', $priv->theme_color);
                     Session::put("appname", get_setting('appname'));
         
-                    $updateUser = DB::table('tb_users')->where('email', $email)->update([
-                        'login_attempt' => ($tbUsers->login_attempt + 1),
+                    $updateUser = DB::table('tb_user')->where('email', $email)->update([
+                        'login_attempt' => ($tbUser->login_attempt + 1),
                         'last_login_at' => date('Y-m-d H:i:s'),
                         'last_login_ip' => $_SERVER['REMOTE_ADDR']
                     ]);

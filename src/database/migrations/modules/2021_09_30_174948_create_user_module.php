@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersModule extends Migration
+class CreateUserModule extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateUsersModule extends Migration
      */
     public function up()
     {
-        $module = \DB::table('cms_moduls')->where("name", "Users")->first();
+        $module = \DB::table('cms_moduls')->where("name", "User")->first();
         if (!$module) {
             \DB::table("cms_moduls")->insert(
                 [
-                    "name" => "Users",
+                    "name" => "User",
                     "icon" => "fa fa-users",
                     "path" => "user",
-                    "table_name" => "tb_users",
+                    "table_name" => "tb_user",
                     "connection" => "pgsql",
                     "controller" => "AdminUserController",
                     "is_protected" => false,
@@ -30,11 +30,11 @@ class CreateUsersModule extends Migration
             );
         }
 
-        $menu = \DB::table('cms_menus')->where("name", "Users")->first();
+        $menu = \DB::table('cms_menus')->where("name", "User")->first();
         if (!$menu) {
             \DB::table("cms_menus")->insert(
                 [
-                    "name"       => "Users",
+                    "name"       => "User",
                     "type"    => "Module",
                     "path"    => "user",
                     "color"     => "normal",
@@ -57,7 +57,7 @@ class CreateUsersModule extends Migration
      */
     public function down()
     {
-        \DB::table('cms_menus')->where("name", "Users")->delete();
-        \DB::table('cms_moduls')->where("name", "Users")->delete();
+        \DB::table('cms_menus')->where("name", "User")->delete();
+        \DB::table('cms_moduls')->where("name", "User")->delete();
     }
 }

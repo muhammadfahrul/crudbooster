@@ -29,7 +29,7 @@ class CBSeeder extends Seeder
             if ($cms_users) {
                 $cmsUsers = DB::table('cms_users')->where('name', 'Super Admin')->first();
                 if ($cmsUsers) {
-                    DB::table('tb_users')->insertOrIgnore([
+                    DB::table('tb_user')->insertOrIgnore([
                         'user_id' => $cmsUsers->id,
                         'privilege_id' => $cmsUsers->id_cms_privileges,
                         'merchant_id' => '',

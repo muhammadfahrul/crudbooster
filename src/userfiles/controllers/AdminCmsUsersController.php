@@ -103,7 +103,7 @@ class AdminCmsUsersController extends CBController {
             $lastInsertId = $id = DB::table($this->table)->insertGetId($this->arr);
         }
 		if ($lastInsertId) {
-			$insertCmsUsers = DB::table('tb_users')->insert([
+			$insertCmsUsers = DB::table('tb_user')->insert([
 				'user_id' => $this->arr['id'],
 				'privilege_id' => $this->arr['id_cms_privileges'],
 				'name' => $this->arr['name'],
@@ -239,7 +239,7 @@ class AdminCmsUsersController extends CBController {
 
         $update = DB::table($this->table)->where($this->primary_key, $id)->update($this->arr);
 		if ($update) {
-			$dataTbUsers = [
+			$dataTbUser = [
 				'name' => $this->arr['name'],
 				'avatar' => $this->arr['photo'],
 				'email' => $this->arr['email'],
@@ -247,9 +247,9 @@ class AdminCmsUsersController extends CBController {
 				'updated_at' => date('Y-m-d H:i:s')
 			];
 			if (!empty($this->arr['password'])) {
-				$dataTbUsers['password'] = $this->arr['password'];
+				$dataTbUser['password'] = $this->arr['password'];
 			}
-			$updateTbUsers = DB::table('tb_users')->where('user_id', $id)->update($dataTbUsers);
+			$updateTbUser = DB::table('tb_user')->where('user_id', $id)->update($dataTbUser);
 		}
 
         //Looping Data Input Again After Insert
@@ -386,19 +386,19 @@ class AdminCmsUsersController extends CBController {
         if (CRUDBooster::isColumnExists($this->table, 'deleted_at')) {
             $update = DB::table($this->table)->where($this->primary_key, $id)->update(['deleted_at' => date('Y-m-d H:i:s')]);
 			if ($update) {
-				if (CRUDBooster::isColumnExists('tb_users', 'deleted_at')) {
-					$updateTbUsers = DB::table('tb_users')->where('user_id', $id)->update(['deleted_at' => date('Y-m-d H:i:s')]);
+				if (CRUDBooster::isColumnExists('tb_user', 'deleted_at')) {
+					$updateTbUser = DB::table('tb_user')->where('user_id', $id)->update(['deleted_at' => date('Y-m-d H:i:s')]);
 				} else {
-					$deleteTbUsers = DB::table('tb_users')->where('user_id', $id)->delete();
+					$deleteTbUser = DB::table('tb_user')->where('user_id', $id)->delete();
 				}
 			}
         } else {
             $delete = DB::table($this->table)->where($this->primary_key, $id)->delete();
 			if ($delete) {
-				if (CRUDBooster::isColumnExists('tb_users', 'deleted_at')) {
-					$updateTbUsers = DB::table('tb_users')->where('user_id', $id)->update(['deleted_at' => date('Y-m-d H:i:s')]);
+				if (CRUDBooster::isColumnExists('tb_user', 'deleted_at')) {
+					$updateTbUser = DB::table('tb_user')->where('user_id', $id)->update(['deleted_at' => date('Y-m-d H:i:s')]);
 				} else {
-					$deleteTbUsers = DB::table('tb_users')->where('user_id', $id)->delete();
+					$deleteTbUser = DB::table('tb_user')->where('user_id', $id)->delete();
 				}
 			}
         }
