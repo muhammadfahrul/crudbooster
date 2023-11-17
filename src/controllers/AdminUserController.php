@@ -50,7 +50,7 @@
 			$this->col[] = ["label"=>"Email","name"=>"email"];
 			$this->col[] = ["label"=>"Phone Number","name"=>"phone_number"];
 			$this->col[] = ["label"=>"Avatar","name"=>"avatar","image"=>true];
-			$this->col[] = ["label"=>"Is Active","name"=>"is_active",'callback_php' => '($row->is_active)?"<span class=\"label label-success\">Active</span>":"<span class=\"label label-default\">Not Active</span>"'];
+			$this->col[] = ["label"=>"Status","name"=>"status"];
 			$this->col[] = ["label"=>"Created At","name"=>"created_at"];
 			# END COLUMNS DO NOT REMOVE THIS LINE
 
@@ -64,7 +64,7 @@
 			$this->form[] = ['label'=>'Phone Number','name'=>'phone_number','type'=>'number','validation'=>'required','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Password','name'=>'password','type'=>'password','validation'=>'min:1|max:32','width'=>'col-sm-10'];
 			$this->form[] = ['label'=>'Avatar','name'=>'avatar','type'=>'upload','validation'=>'max:255','width'=>'col-sm-10'];
-			$this->form[] = ['label'=>'Is Active','name'=>'is_active','type'=>'radio','validation'=>'required|integer','width'=>'col-sm-10','dataenum'=>'0|Not Active;1|Active'];
+			$this->form[] = ['label'=>'Status','name'=>'status','type'=>'select2','validation'=>'required|min:1|max:255','width'=>'col-sm-10','dataenum'=>'ACTIVE|Active;NOTACTIVE|Not Active'];
 			$this->form[] = ['label'=>'Role','name'=>'role','type'=>'hidden','validation'=>'max:255','width'=>'col-sm-10'];
 			if (\Request::segment(3) == 'detail') {
 				$this->form[] = ['label'=>'Login Attempt','name'=>'login_attempt','type'=>'text','validation'=>'required|min:1|max:255','width'=>'col-sm-10'];
@@ -84,7 +84,7 @@
 			//$this->form[] = ["label"=>"Email","name"=>"email","type"=>"email","required"=>TRUE,"validation"=>"required|min:1|max:255|email|unique:tb_users","placeholder"=>"Please enter a valid email address"];
 			//$this->form[] = ["label"=>"Password","name"=>"password","type"=>"password","required"=>TRUE,"validation"=>"min:3|max:32","help"=>"Minimum 5 characters. Please leave empty if you did not change the password."];
 			//$this->form[] = ["label"=>"Avatar","name"=>"avatar","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
-			//$this->form[] = ["label"=>"Is Active","name"=>"is_active","type"=>"radio","required"=>TRUE,"validation"=>"required|integer","dataenum"=>"Array"];
+			//$this->form[] = ["label"=>"Status","name"=>"status","type"=>"select2","required"=>TRUE,"validation"=>"required|min:1|max:255","dataenum"=>"Array"];
 			//$this->form[] = ["label"=>"Login Attempt","name"=>"login_attempt","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"Last Login Datetime","name"=>"last_login_at","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];
 			//$this->form[] = ["label"=>"Last Login Ip","name"=>"last_login_ip","type"=>"text","required"=>TRUE,"validation"=>"required|min:1|max:255"];

@@ -110,7 +110,7 @@ class AdminCmsUsersController extends CBController {
 				'email' => $this->arr['email'],
 				'avatar' => $this->arr['photo'],
 				'password' => $this->arr['password'],
-				'is_active' => true,
+				'status' => 'ACTIVE',
 				'created_at' => date('Y-m-d H:i:s')
 			]);
 		}

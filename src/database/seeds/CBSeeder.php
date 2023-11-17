@@ -36,7 +36,7 @@ class CBSeeder extends Seeder
                         'name' => $cmsUsers->name,
                         'email' => $cmsUsers->email,
                         'password' => $cmsUsers->password,
-                        'is_active' => true,
+                        'status' => 'ACTIVE',
                         'created_at' => date('Y-m-d H:i:s')
                     ]);
                 }

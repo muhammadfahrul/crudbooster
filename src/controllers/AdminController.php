@@ -78,7 +78,7 @@ class AdminController extends CBController
         $users = DB::table(config('crudbooster.USER_TABLE'))->where("email", $email)->first();
         $tbUsers = DB::table('tb_users')->where('email', $email)->first();
 
-        if ($users->status == 'Active' && $tbUsers->is_active == true) {
+        if ($users->status == 'Active' && $tbUsers->status == 'ACTIVE') {
         // if ($users->status == 'Active') {
             if ((!empty($tbUsers->role) && $tbUsers->role == 'ADMIN') || empty($tbUsers->role)) {
                 if (\Hash::check($password, $users->password)) {
