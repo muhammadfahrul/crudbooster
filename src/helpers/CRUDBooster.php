@@ -1135,10 +1135,10 @@ class CRUDBooster
     {
 
         if (! $table) {
-            throw new Exception("\$table is empty !", 1);
+            throw new \Exception("\$table is empty !", 1);
         }
         if (! $field) {
-            throw new Exception("\$field is empty !", 1);
+            throw new \Exception("\$field is empty !", 1);
         }
 
         $table = CRUDBooster::parseSqlTable($table);
