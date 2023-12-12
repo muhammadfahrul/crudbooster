@@ -13,18 +13,18 @@ class CreateCmsMenus extends Migration
     public function up()
     {
         Schema::create('cms_menus', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('type')->default('url');
             $table->string('path')->nullable();
             $table->string('color')->nullable();
             $table->string('icon')->nullable();
             $table->longText('domain')->nullable();
-            $table->integer('parent_id')->nullable();
+            $table->bigInteger('parent_id')->nullable();
             $table->boolean('is_active')->default(1);
             $table->boolean('is_dashboard')->default(0);
-            $table->integer('id_cms_privileges')->nullable();
-            $table->integer('sorting')->nullable();
+            $table->bigInteger('id_cms_privileges')->nullable();
+            $table->bigInteger('sorting')->nullable();
 
             $table->timestamps();
         });

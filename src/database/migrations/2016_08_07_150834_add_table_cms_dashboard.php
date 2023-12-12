@@ -13,10 +13,10 @@ class AddTableCmsDashboard extends Migration
     public function up()
     {
         Schema::create('cms_dashboard', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
             $table->string('name')->nullable();
-            $table->integer('id_cms_privileges')->nullable();
+            $table->bigInteger('id_cms_privileges')->nullable();
             $table->longtext('content')->nullable();
 
             $table->timestamps();

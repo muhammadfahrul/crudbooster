@@ -22,7 +22,7 @@ class AddTableTbUser extends Migration
             $table->string('password')->nullable();
             $table->string('avatar')->nullable();
             $table->string('status')->default('ACTIVE');
-            $table->integer('login_attempt')->nullable()->default(0);
+            $table->bigInteger('login_attempt')->nullable()->default(0);
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
             $table->string('role')->nullable();

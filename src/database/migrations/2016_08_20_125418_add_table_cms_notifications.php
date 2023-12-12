@@ -13,9 +13,9 @@ class AddTableCmsNotifications extends Migration
     public function up()
     {
         Schema::create('cms_notifications', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 
-            $table->integer('id_cms_users')->nullable();
+            $table->bigInteger('id_cms_users')->nullable();
             $table->string('content')->nullable();
             $table->string('url')->nullable();
             $table->boolean('is_read')->nullable();

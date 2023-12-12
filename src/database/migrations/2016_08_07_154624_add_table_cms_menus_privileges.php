@@ -13,9 +13,9 @@ class AddTableCmsMenusPrivileges extends Migration
     public function up()
     {
         Schema::create('cms_menus_privileges', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('id_cms_menus')->nullable();
-            $table->integer('id_cms_privileges')->nullable();
+            $table->bigIncrements('id');
+            $table->bigInteger('id_cms_menus')->nullable();
+            $table->bigInteger('id_cms_privileges')->nullable();
         });
     }
 
