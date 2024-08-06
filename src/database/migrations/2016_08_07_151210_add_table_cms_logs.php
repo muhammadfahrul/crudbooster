@@ -18,7 +18,7 @@ class AddTableCmsLogs extends Migration
             $table->string('ipaddress', 50)->nullable();
             $table->longText('useragent')->nullable();
             $table->string('url')->nullable();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->bigInteger('id_cms_users')->nullable();
 
             $table->timestamps();
