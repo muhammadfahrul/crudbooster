@@ -338,7 +338,7 @@ class ApiCustomController extends CBController
 
             $controllerName = ucwords(str_replace('_', ' ', $a['permalink']));
             $controllerName = str_replace(' ', '', $controllerName);
-            CRUDBooster::generateAPI($controllerName, $a['tabel'], $a['permalink'], $a['method_type']);
+            CRUDBooster::generateAPI($controllerName, $a['tabel'], $a['permalink'], $a['method_type'], $a['aksi']);
 
             DB::table('cms_apicustom')->insert($a);
         }
