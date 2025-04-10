@@ -3604,17 +3604,19 @@ class CRUDBooster
                                             $id = DB::table($table)->insertGetId($row_assign);
                                         }
                                         DB::commit();
+
+                                        $result['api_status'] = 1;
+                                        $result['api_message'] = 'Success';
+                                        $result['data']['id'] = $id;
+                                        $lastId = $id;
                                     }catch (\Exception $e)
                                     {
                                         DB::rollBack();
-                                        throw new \Exception($e->getMessage());
+
+                                        Log::error($e);
+                                        $result['api_status'] = 0;
+                                        $result['api_message'] = 'Failed';
                                     }
-                    
-                                    $result['api_status'] = ($id) ? 1 : 0;
-                                    $result['api_message'] = ($id) ? 'Success' : 'Failed';
-                    
-                                    $result['data']['id'] = $id;
-                                    $lastId = $id;
                         
                                     // Update The Child Table
                                     foreach ($parameters as $param) {
@@ -4498,17 +4500,19 @@ class CRUDBooster
                                                     $id = DB::table($table)->insertGetId($row_assign);
                                                 }
                                                 DB::commit();
+
+                                                $result['api_status'] = 1;
+                                                $result['api_message'] = 'Success';
+                                                $result['data']['id'] = $id;
+                                                $lastId = $id;
                                             }catch (\Exception $e)
                                             {
                                                 DB::rollBack();
-                                                throw new \Exception($e->getMessage());
+
+                                                Log::error($e);
+                                                $result['api_status'] = 0;
+                                                $result['api_message'] = 'Failed';
                                             }
-                            
-                                            $result['api_status'] = ($id) ? 1 : 0;
-                                            $result['api_message'] = ($id) ? 'Success' : 'Failed';
-                            
-                                            $result['data']['id'] = $id;
-                                            $lastId = $id;
                                         } else {
                             
                                             try {
