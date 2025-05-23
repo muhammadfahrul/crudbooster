@@ -4,6 +4,9 @@
     $parent_select = (count(explode(",", $form['parent_select'])) > 1) ? explode(",", $form['parent_select']) : $form['parent_select'];
     $parent = is_array($parent_select) ? $parent_select[0] : $parent_select;
     $add_field = is_array($parent_select) ? $parent_select[1] : '';
+    $value_parent = '';
+    $datatable = explode(',', $form['datatable']);
+    if (isset($datatable[0])) $value_parent = \DB::table($datatable[0])->where($form['join_pk'], $value)->value($parent);
     ?>
     @push('bottom')
         <script type="text/javascript">
@@ -17,7 +20,7 @@
                             @if(!empty($add_field))
                     var add_field = ($("#{{$add_field}}").val()) ? $("#{{$add_field}}").val() : "";
                             @endif
-                    var datatableWhere = "{{$form['datatable_where']}}";
+                    var datatableWhere = "{!!$form['datatable_where']!!}";
                     @if(!empty($add_field))
                     if (datatableWhere) {
                         if (add_field) {
@@ -49,8 +52,13 @@
                         $current.html("<option value=''>{{$default}}");
                     }
                 })
-
-                $('#{{$parent}}').trigger('change');
+                
+                var value_parent = "{{$value_parent}}";
+                if (value_parent != '') {
+                    $('#{{$parent}}').val("{{$value_parent}}").trigger('change');
+                } else {
+                    $('#{{$parent}}').trigger('change');
+                }
                 $("input[name='{{$parent}}']:checked").trigger("change");
                 $("#{{$form['name']}}").trigger('change');
             })
